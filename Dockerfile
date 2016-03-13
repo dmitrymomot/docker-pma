@@ -1,8 +1,12 @@
-FROM dmitrymomot/nginx
+FROM corbinu/docker-nginx-php
 
 MAINTAINER "Dmitry Momot" <mail@dmomot.com>
 
-RUN apt-get install -y php5-fpm php5-cli php5-json php5-mcrypt php5-mysql php5-gd php5-curl
+RUN apt-get update -y && \
+    apt-get install -y mysql-client
+
+ENV PMA_VERSION 4.5.5.1
+ENV MAX_UPLOAD "50M"
 
 ENV PMA_SECRET          blowfish_secret
 ENV PMA_USERNAME        pma
@@ -12,17 +16,11 @@ ENV PMA_AUTH_TYPE       cookie
 ENV MYSQL_USERNAME      mysql
 ENV MYSQL_PASSWORD      password
 
-RUN apt-get update
-RUN apt-get install -y mysql-client
-
-ENV PMA_VERSION 4.5.5.1
-ENV MAX_UPLOAD "50M"
-
-RUN wget "https://files.phpmyadmin.net/phpMyAdmin/$PMA_VERSION/phpMyAdmin-$PMA_VERSION-english.tar.bz2" \
- && tar -xvjf "/phpMyAdmin-$PMA_VERSION-english.tar.bz2" -C / \
- && rm "/phpMyAdmin-$PMA_VERSION-english.tar.bz2" \
- && rm -r /data/www/public \
- && mv "/phpMyAdmin-$PMA_VERSION-english" /data/www/public
+RUN wget https://files.phpmyadmin.net/phpMyAdmin/$PMA_VERSION/phpMyAdmin-$PMA_VERSION-english.tar.bz2 \
+ && tar -xvjf /phpMyAdmin-$PMA_VERSION-english.tar.bz2 -C / \
+ && rm /phpMyAdmin-$PMA_VERSION-english.tar.bz2 \
+ && rm -r /www \
+ && mv /phpMyAdmin-$PMA_VERSION-english /www
 
 ADD bootstrap/config.inc.php /
 ADD bootstrap/create_user.sql /
