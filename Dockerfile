@@ -15,14 +15,14 @@ ENV MYSQL_PASSWORD      password
 RUN apt-get update
 RUN apt-get install -y mysql-client
 
-ENV PHPMYADMIN_VERSION 4.5.5.1
+ENV PMA_VERSION 4.5.5.1
 ENV MAX_UPLOAD "50M"
 
-RUN wget https://files.phpmyadmin.net/phpMyAdmin/$PHPMYADMIN_VERSION/phpMyAdmin-$PHPMYADMIN_VERSION-english.tar.bz2 \
- && tar -xvjf /phpMyAdmin-$PHPMYADMIN_VERSION-english.tar.bz2 -C / \
- && rm /phpMyAdmin-$PHPMYADMIN_VERSION-english.tar.bz2 \
+RUN wget "https://files.phpmyadmin.net/phpMyAdmin/$PMA_VERSION/phpMyAdmin-$PMA_VERSION-english.tar.bz2" \
+ && tar -xvjf "/phpMyAdmin-$PMA_VERSION-english.tar.bz2" -C / \
+ && rm "/phpMyAdmin-$PMA_VERSION-english.tar.bz2" \
  && rm -r /data/www/public \
- && mv /phpMyAdmin-$PHPMYADMIN_VERSION-english /data/www/public
+ && mv "/phpMyAdmin-$PMA_VERSION-english" /data/www/public
 
 ADD bootstrap/config.inc.php /
 ADD bootstrap/create_user.sql /
