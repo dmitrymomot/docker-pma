@@ -2,7 +2,7 @@ FROM dmitrymomot/nginx
 
 MAINTAINER "Dmitry Momot" <mail@dmomot.com>
 
-RUN apt-get install -y nginx php5-fpm php5-cli php5-json php5-mcrypt php5-mysql php5-gd php5-curl
+RUN apt-get install -y php5-fpm php5-cli php5-json php5-mcrypt php5-mysql php5-gd php5-curl
 
 ENV PMA_SECRET          blowfish_secret
 ENV PMA_USERNAME        pma
@@ -15,14 +15,14 @@ ENV MYSQL_PASSWORD      password
 RUN apt-get update
 RUN apt-get install -y mysql-client
 
-ENV PHPMYADMIN_VERSION 4.5.0.2
+ENV PHPMYADMIN_VERSION 4.5.5.1
 ENV MAX_UPLOAD "50M"
 
-RUN wget https://files.phpmyadmin.net/phpMyAdmin/${PHPMYADMIN_VERSION}/phpMyAdmin-${PHPMYADMIN_VERSION}-english.tar.bz2 \
- && tar -xvjf /phpMyAdmin-${PHPMYADMIN_VERSION}-english.tar.bz2 -C / \
- && rm /phpMyAdmin-${PHPMYADMIN_VERSION}-english.tar.bz2 \
+RUN wget https://files.phpmyadmin.net/phpMyAdmin/$PHPMYADMIN_VERSION/phpMyAdmin-$PHPMYADMIN_VERSION-english.tar.bz2 \
+ && tar -xvjf /phpMyAdmin-$PHPMYADMIN_VERSION-english.tar.bz2 -C / \
+ && rm /phpMyAdmin-$PHPMYADMIN_VERSION-english.tar.bz2 \
  && rm -r /data/www/public \
- && mv /phpMyAdmin-${PHPMYADMIN_VERSION}-english /data/www/public
+ && mv /phpMyAdmin-$PHPMYADMIN_VERSION-english /data/www/public
 
 ADD bootstrap/config.inc.php /
 ADD bootstrap/create_user.sql /
