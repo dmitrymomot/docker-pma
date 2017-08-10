@@ -5,7 +5,7 @@ MAINTAINER "Dmitry Momot" <mail@dmomot.com>
 RUN apt-get update -y && \
     apt-get install -y mysql-client
 
-ENV PMA_VERSION 4.5.5.1
+ENV PMA_VERSION 4.7.3
 ENV MAX_UPLOAD "50M"
 
 ENV PMA_SECRET          blowfish_secret
